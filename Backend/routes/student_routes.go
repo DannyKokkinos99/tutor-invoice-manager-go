@@ -13,5 +13,6 @@ func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
 	r.POST("/student", studentService.CreateStudent)
 	r.DELETE("/student", studentService.DeleteStudent)
 	r.PUT("/student", studentService.EditStudent)
+	//TODO ADD GET STUDENT
 
 }

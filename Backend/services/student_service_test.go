@@ -79,14 +79,25 @@ func TestFlowStudent(t *testing.T) {
 	assert.Equal(t, "John", studentResponse.Name)
 	assert.Equal(t, 30, studentResponse.PricePerHour)
 
-	// TESTING GET USER Correctly
-	// req, err = http.NewRequest(http.MethodGet, "/user", nil)
+	// TESTING DELETE USER
+	studentID := `{
+		"student_id": 1
+	  }`
+	req, err = http.NewRequest(http.MethodDelete, "/student", strings.NewReader(studentID))
+	if err != nil {
+		t.Fatalf("Error creating request: %v", err)
+	}
+	rr = httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+	assert.Equal(t, http.StatusOK, rr.Code)
+
+	// TESTING GET USER FAIL
+	// req, err = http.NewRequest(http.MethodGet, "/student", nil)
 	// if err != nil {
 	// 	t.Fatalf("Error creating request: %v", err)
 	// }
-	// req.Header.Add("Authorization", token)
 	// rr = httptest.NewRecorder()
 	// r.ServeHTTP(rr, req)
-	// assert.Equal(t, http.StatusOK, rr.Code)
+	// assert.Equal(t, http.StatusInternalServerError, rr.Code)
 
 }
