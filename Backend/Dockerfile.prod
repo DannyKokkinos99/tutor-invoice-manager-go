@@ -1,0 +1,36 @@
+# Use Golang as the builder image
+FROM golang:1.24-alpine AS builder
+
+# Install SQLite dependency
+RUN apk add --no-cache gcc musl-dev postgresql-dev upx
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy go.mod and go.sum, then download dependencies
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
+# Copy the entire project into the container
+COPY . .
+
+# Build the Go application
+RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /bin/main .
+
+# Step 2: Production Stage (Minimize the final image size)
+FROM scratch
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy only the compiled binary from the builder image to the production image
+COPY --from=builder /bin/main /main
+COPY --from=builder /app/.env .env
+
+# Expose the application port
+EXPOSE 4200
+
+# Set the command to run the binary
+CMD ["/main"]
+

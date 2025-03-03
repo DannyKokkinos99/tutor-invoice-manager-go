@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  dev_go:
+    container_name: tutor-manager-go
+    image: tutor-manager-go:dev
+    build:
+      context: ./Backend/
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - ./backend:/app
+    restart: always
+    depends_on:
+      postgres:
+       condition: service_healthy
+  # prod_go:
+  #   container_name: api-go-prod
+  #   image: api-go:prod
+  #   build:
+  #     context: ./Backend/
+  #     dockerfile: Dockerfile.prod
+  #   ports:
+  #     - "${PORT}:${PORT}"
+  #   restart: always
+  #   depends_on:
+  #     postgres:
+  #      condition: service_healthy
+  postgres:
+    image: postgres:17
+    container_name: postgres-database-${DEV_POSTGRES_DB}
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: ${DEV_POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", $DEV_POSTGRES_USER, "-d", $DEV_POSTGRES_DB, "-h", "localhost"]
+      interval: 10s  # Run the check every 10 seconds
+      retries: 5  # Retry 5 times before considering the service unhealthy
+      start_period: 30s  # Give PostgreSQL 30 seconds before starting health checks
+      timeout: 5s  # Timeout after 5 seconds if PostgreSQL isn't responsive
