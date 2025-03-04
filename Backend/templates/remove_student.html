@@ -1,0 +1,22 @@
+<div class="container-centered" id="main">
+    <div class="card">
+        <h1 class="heading">Remove Student</h1>
+        <form method="POST" hx-post="/remove_student" hx-target="#main" hx-swap="outerHTML">
+            <div>
+                <label for="student_id" class="label">Select Student to Remove</label>
+                <select id="student_id" name="student_id" class="input-field" required>
+                    <option value="">Select a student</option>
+                    {{ range .students }}
+                        <option value="{{ .ID }}">{{ .Name }} {{ .Surname }}</option>
+                    {{ end }}
+                </select>
+            </div>
+            <div class="form-container">
+                <button type="button" class="button button-cancel" onclick="window.location.href='/'">
+                    Cancel
+                </button>
+                <button type="submit" class="button button-submit" hx-delete="/student" hx-target="#main" hx-swap="outerHTML">Remove</button>
+            </div>
+        </form>
+    </div>
+</div>

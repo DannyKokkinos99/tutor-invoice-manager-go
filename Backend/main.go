@@ -63,7 +63,8 @@ func main() {
 		MaxAge:           12 * time.Hour,                                                // Cache preflight requests for 12 hours
 	}))
 	// Define routes
-	routes.RegisterRoutes(r, db)
+	routes.RegisterStudentRoutes(r, db)
+	routes.RegisterPageRoutes(r, db)
 
 	// Serve Swagger UI
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

@@ -1,0 +1,63 @@
+<div class="container-centered" id="main">
+    <div class="card">
+      <h1 class="heading">Edit Student</h1>
+      <form method="POST" id="edit-student-form">
+        <!-- Student Dropdown (Populated via HTMX) -->
+        <div>
+          <label class="label">Select Student</label>
+          <select 
+          id="student_id" 
+          class="input-field" 
+          name="student_id" 
+          hx-get="/student" 
+          hx-trigger="change" 
+          hx-target="#student-details" 
+          hx-swap="innerHTML"
+          required
+          >
+            <option value="">-- Select a Student --</option>
+            {{ range .students }}
+            <option value="{{ .ID }}">{{ .Name }} {{ .Surname }}</option>
+            {{ end }}
+          </select>
+        </div>
+  
+        <!-- Student Details Form Fields -->
+        <div id="student-details">
+            <div>
+            <label for="name" class="label">Name</label>
+            <input type="text" id="name" name="name" value="{{ .student.Name }}" class="input-field" required />
+            </div>
+            <div>
+            <label for="surname" class="label">Surname</label>
+            <input type="text" id="surname" name="surname" value="{{ .student.Surname }}" class="input-field" required />
+            </div>
+            <div>
+            <label for="parent" class="label">Parent</label>
+            <input type="text" id="parent" name="parent" value="{{ .student.Parent }}" class="input-field" required />
+            </div>
+            <div>
+            <label for="email" class="label">Email</label>
+            <input type="email" id="email" name="email" value="{{ .student.Email }}" class="input-field" required />
+            </div>
+            <div>
+            <label for="address" class="label">Address</label>
+            <input type="text" id="address" name="address" value="{{ .student.Address }}" class="input-field" required />
+            </div>
+            <div>
+            <label for="phone_number" class="label">Phone Number</label>
+            <input type="text" id="phone_number" name="phone_number" value="{{ .student.PhoneNumber }}" class="input-field" required />
+            </div>
+            <div>
+            <label for="price_per_hour" class="label">Price per Hour</label>
+            <input type="text" id="price_per_hour" name="price_per_hour" value="{{ .student.PricePerHour }}" class="input-field" required />
+            </div>
+        </div>
+        <!-- Form Buttons -->
+        <div class="form-container">
+          <button type="button" class="button button-cancel" onclick="window.location.href='/'">Cancel</button>
+          <button type="submit" class="button button-submit" hx-put="/student" hx-target="#main" hx-swap="outerHTML">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>

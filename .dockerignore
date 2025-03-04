@@ -1,0 +1,4 @@
+.gitignore
+run.bat
+postgres-data/
+docker-compose.yml

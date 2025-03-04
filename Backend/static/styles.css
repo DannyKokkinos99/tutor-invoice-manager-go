@@ -1,0 +1,87 @@
+
+body {
+  background-image: url('landing.jpg'); /* Replace with the actual path to your image */
+  background-size: cover;      /* Ensures the image covers the entire page */
+  background-position: center; /* Centers the image on the page */
+  background-attachment: fixed;/* Keeps the image fixed while scrolling */
+  margin: 0;                   /* Removes default margin */
+  font-family: Arial, sans-serif; /* Choose your preferred font */
+}
+  
+/* Centering the form container */
+.container-centered {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    width: 50%;
+  }
+  
+  /* Card styling */
+  .card {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 16px;
+    padding: 16px;
+    color: white;
+  }
+  
+  /* Heading */
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  /* Label styling */
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  /* Input fields */
+  .input-field {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 8px;
+    width: 100%;
+    display: block;
+    margin-bottom: 16px;
+  }
+  
+  /* Button styling */
+  .button {
+    border-radius: 6px;
+    padding: 10px 16px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Cancel button */
+  .button-cancel {
+    background-color: red;
+    margin-right: 10px;
+  }
+  
+  .button-cancel:hover {
+    background-color: darkred;
+  }
+  
+  /* Submit button */
+  .button-submit {
+    background-color: blue;
+  }
+  
+  .button-submit:hover {
+    background-color: darkblue;
+  }
+  
+  /* Form button container */
+  .form-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
