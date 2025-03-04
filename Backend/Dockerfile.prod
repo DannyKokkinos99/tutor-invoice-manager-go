@@ -11,7 +11,7 @@ WORKDIR /app
 COPY go.mod .
 COPY go.sum .
 RUN go mod download
-
+ENV GIN_MODE=release
 # Copy the entire project into the container
 COPY . .
 
@@ -27,6 +27,8 @@ WORKDIR /app
 # Copy only the compiled binary from the builder image to the production image
 COPY --from=builder /bin/main /main
 COPY --from=builder /app/.env .env
+COPY --from=builder /app/templates /templates
+COPY --from=builder /app/static /static
 
 # Expose the application port
 EXPOSE 4200

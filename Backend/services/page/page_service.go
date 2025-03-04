@@ -37,3 +37,14 @@ func (s *PageService) EditStudent(c *gin.Context) {
 	// Pass students to the edit_student.html template
 	c.HTML(http.StatusOK, "edit_student.html", gin.H{"students": students})
 }
+
+func (s *PageService) CreateInvoice(c *gin.Context) {
+	var students []models.Student
+	// Fetch all students from DB
+	if err := s.db.Find(&students).Error; err != nil {
+		c.String(http.StatusInternalServerError, "Error fetching students ❌")
+		return
+	}
+	// Pass students to the remove_student.html template
+	c.HTML(http.StatusOK, "create_invoice.html", gin.H{"students": students})
+}

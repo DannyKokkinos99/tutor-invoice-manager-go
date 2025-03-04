@@ -1,3 +1,5 @@
 postgres-data
 .env
 Backend/docs
+Backend/tmp
+Backend/service_account.json

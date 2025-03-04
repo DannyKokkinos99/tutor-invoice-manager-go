@@ -15,10 +15,10 @@ func RegisterPageRoutes(r *gin.Engine, db *gorm.DB) {
 	r.GET("/", func(c *gin.Context) {
 		c.File("./templates/index.html")
 	})
-
 	r.GET("/action/add_student", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "add_student.html", nil)
 	})
 	r.GET("/action/remove_student", pageService.RemoveStudent)
 	r.GET("/action/edit_student", pageService.EditStudent)
+	r.GET("/action/create_invoice", pageService.CreateInvoice)
 }

@@ -1,0 +1,27 @@
+<div class="container-centered" id="main">
+    <div class="card">
+      <h1 class="heading">Generate Invoice</h1>
+      <form method="POST" id="create-invoice-form">
+        <div>
+          <label for="student_id" class="label">Select Student</label>
+          <select id="student_id" name="student_id" class="input-field" required>
+            <option value="">Select a student</option>
+            {{ range .students }}
+                <option value="{{ .ID }}">{{ .Name }} {{ .Surname }}</option>
+            {{ end }}
+        </select>
+        </div>
+  
+        <div>
+          <label for="hours" class="label">Hours owed this week</label>
+          <input type="text" id="hours" name="hours" class="input-field" required />
+        </div>
+  
+        <div class="form-container">
+          <button type="button" class="button button-cancel" hx-get="/" hx-target="#main" hx-swap="outerHTML">Cancel</button>
+          <button type="submit" class="button button-submit" hx-post="/build_invoice" hx-target="#main">Generate Invoice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

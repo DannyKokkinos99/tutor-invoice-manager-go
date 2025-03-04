@@ -14,10 +14,10 @@
   <body>
     <div id="button-container">
       <!-- 5 Buttons for triggering different actions -->
+      <button hx-get="/action/create_invoice" hx-target="#button-container" hx-swap="outerHTML">Create Invoice</button>
       <button hx-get="/action/add_student" hx-target="#button-container" hx-swap="innerHTML">Add Student</button>
       <button hx-get="/action/edit_student" hx-target="#button-container" hx-swap="outerHTML">Edit Student</button>
       <button hx-get="/action/remove_student" hx-target="#button-container" hx-swap="outerHTML">Remove Student</button>
-      <button hx-get="/action/TODO" hx-target="#button-container" hx-swap="outerHTML">TODO</button>
       <button hx-get="/action/TODO" hx-target="#button-container" hx-swap="outerHTML">TODO</button>
     </div>
     

@@ -15,9 +15,10 @@ services:
     depends_on:
       postgres:
        condition: service_healthy
+
   # prod_go:
-  #   container_name: api-go-prod
-  #   image: api-go:prod
+  #   container_name: tutor-manager-go
+  #   image: tutor-manager-go:latest
   #   build:
   #     context: ./Backend/
   #     dockerfile: Dockerfile.prod
@@ -27,6 +28,7 @@ services:
   #   depends_on:
   #     postgres:
   #      condition: service_healthy
+
   postgres:
     image: postgres:17
     container_name: postgres-database-${DEV_POSTGRES_DB}
