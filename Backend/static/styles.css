@@ -1,5 +1,6 @@
 
 body {
+  background-color: #050303; /* Initial background color to avoid white flash */
   background-image: url('landing.jpg'); /* Replace with the actual path to your image */
   background-size: cover;      /* Ensures the image covers the entire page */
   background-position: center; /* Centers the image on the page */
