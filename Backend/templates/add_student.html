@@ -31,8 +31,8 @@
         <input type="text" id="price_per_hour" name="price_per_hour" class="input-field" required />
       </div>
       <div class="form-container">
-        <button type="button" class="button button-cancel" onclick="window.location.href='/'">Cancel</button>
-        <button type="submit" class="button button-submit" hx-post="/student" hx-target="#main" hx-swap="outerHTML">Add</button>
+        <button type="button" class="button button-cancel" hx-get="/" hx-target="#main" hx-swap="outerHTML">Cancel</button>
+        <button type="submit" class="button button-submit" hx-post="/student" hx-target="#main" hx-swap="innerHTML">Add</button>
       </div>
     </form>
   </div>

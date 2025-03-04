@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HTMX Example</title>
+    <title>Tutor Manager</title>
     <link rel="stylesheet" href="/static/styles.css">
     <script
       src="https://unpkg.com/htmx.org@2.0.4"
@@ -12,11 +12,9 @@
     ></script>
   </head>
   <body>
-    <h1>HTMX Example with Buttons</h1>
-
     <div id="button-container">
       <!-- 5 Buttons for triggering different actions -->
-      <button hx-get="/action/add_student" hx-target="#button-container" hx-swap="outerHTML">Add Student</button>
+      <button hx-get="/action/add_student" hx-target="#button-container" hx-swap="innerHTML">Add Student</button>
       <button hx-get="/action/edit_student" hx-target="#button-container" hx-swap="outerHTML">Edit Student</button>
       <button hx-get="/action/remove_student" hx-target="#button-container" hx-swap="outerHTML">Remove Student</button>
       <button hx-get="/action/TODO" hx-target="#button-container" hx-swap="outerHTML">TODO</button>
