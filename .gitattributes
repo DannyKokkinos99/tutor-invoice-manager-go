@@ -1,1 +1,2 @@
 docker-compose.yml merge=ours
+/Backend/.env merge=ours

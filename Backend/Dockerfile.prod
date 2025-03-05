@@ -2,7 +2,7 @@
 FROM golang:1.24-alpine AS builder
 
 # Install SQLite dependency
-RUN apk add --no-cache gcc musl-dev postgresql-dev upx
+RUN apk add --no-cache gcc musl-dev postgresql-dev upx ca-certificates
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -20,8 +20,8 @@ RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /bin/main .
 # Step 2: Production Stage (Minimize the final image size)
 FROM scratch
 
-# Set the working directory inside the container
-# WORKDIR /app
+# Copy CA certificates from builder image
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Copy only the compiled binary from the builder image to the production image
 COPY --from=builder /bin/main /main
@@ -29,6 +29,7 @@ COPY --from=builder /bin/main /main
 COPY --from=builder /app/.env .env 
 COPY --from=builder /app/templates /templates
 COPY --from=builder /app/static /static
+COPY --from=builder /app/service_account.json service_account.json
 
 # Expose the application port
 EXPOSE 4200

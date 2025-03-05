@@ -49,23 +49,21 @@ func (s *InvoiceService) SendInvoice(c *gin.Context) {
 	//get student from database
 	var student models.Student
 	if err := s.db.Where("id = ?", studentID).First(&student).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Student not found ❌"})
-		return
+		log.Fatalf("Error: %v", err)
 	}
+	fmt.Printf("Student is %s\n", student.Name)
 	//Save pdf to gdrive
 	g, err := gdrive.NewGDrive("service_account.json")
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to connect to Google Drive ❌"})
+		log.Fatalf("Error: %v", err)
 	}
 	f, err := g.CreateFolder(student.Name, INVOICE_FOLDER_ID)
 	if err != nil {
-		fmt.Println(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to connect to Google Drive ❌"})
+		log.Fatalf("Error: %v", err)
 	}
 	_, err = g.UploadFile(filePath, f.Id, filePath)
 	if err != nil {
-		fmt.Println(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to upload file to Google Drive ❌"})
+		log.Fatalf("Error: %v", err)
 	}
 
 	//TODO: send emaail to parents including pdf
@@ -75,7 +73,7 @@ func (s *InvoiceService) SendInvoice(c *gin.Context) {
 	// Delete local invoice after it is send via email
 	err = os.Remove(filePath)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete local copy of Invoice ❌"})
+		log.Fatalf("Error: %v", err)
 	}
 	//Build invoice
 	invoice := models.Invoice{
@@ -92,12 +90,14 @@ func (s *InvoiceService) SendInvoice(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database connection not available ❌"})
 		return
 	}
-
-	if err := s.db.Create(&invoice).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+	err = s.db.Exec("SELECT setval('invoices_id_seq', (SELECT MAX(id) FROM invoices) + 1)").Error
+	if err != nil {
+		log.Fatalf("Error: %v", err)
 	}
-	fmt.Printf("New Invoice created for %s %s (%s) ✅\n", student.Name, student.Surname, filePath)
+	if err := s.db.Create(&invoice).Error; err != nil {
+		log.Fatalf("Error: %v", err)
+	}
+	log.Printf("New Invoice created for %s %s (%s) ✅\n", student.Name, student.Surname, filePath)
 
 	//TODO: change to navigate to invoice inspection step fater testing.
 	c.Header("HX-Location", "/")
@@ -108,14 +108,12 @@ func (s *InvoiceService) BuildInvoice(c *gin.Context) {
 	//Create request binding
 	var req schemas.InvoiceBuilder
 	if err := c.ShouldBind(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+		log.Fatalf("Error: %v", err)
 	}
 	//get student from database
 	var student models.Student
 	if err := s.db.Where("id = ?", req.ID).First(&student).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Student not found ❌"})
-		return
+		log.Fatalf("Error: %v", err)
 	}
 
 	studentFullName := fmt.Sprintf("%s %s", student.Name, student.Surname)

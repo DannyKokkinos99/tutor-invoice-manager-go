@@ -37,7 +37,10 @@ func (s *StudentService) CreateStudent(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database connection not available ❌"})
 		return
 	}
-
+	err := s.db.Exec("SELECT setval('students_id_seq', (SELECT MAX(id) FROM invoices) + 1)").Error
+	if err != nil {
+		log.Fatalf("Failed to reset sequence: %v", err)
+	}
 	if err := s.db.Create(&student).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

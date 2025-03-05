@@ -19,12 +19,14 @@ type GDrive struct {
 func NewGDrive(serviceAccountFile string) (*GDrive, error) {
 	b, err := os.ReadFile(serviceAccountFile)
 	if err != nil {
+		fmt.Println(err)
 		return nil, fmt.Errorf("unable to read service account key file: %v", err)
 	}
 
 	ctx := context.Background()
 	srv, err := drive.NewService(ctx, option.WithCredentialsJSON(b))
 	if err != nil {
+		fmt.Println(err)
 		return nil, fmt.Errorf("unable to create Drive client: %v", err)
 	}
 
@@ -34,6 +36,7 @@ func NewGDrive(serviceAccountFile string) (*GDrive, error) {
 func (g *GDrive) CreateFolder(name, parentID string) (*drive.File, error) {
 	// Check if a folder with the same name already exists in the parent directory
 	query := fmt.Sprintf("'%s' in parents and mimeType='application/vnd.google-apps.folder' and name='%s'", parentID, name)
+
 	r, err := g.service.Files.List().
 		Q(query).
 		Fields("files(id, name)"). // Only retrieve the id and name of existing folders
@@ -41,6 +44,7 @@ func (g *GDrive) CreateFolder(name, parentID string) (*drive.File, error) {
 		Do()
 
 	if err != nil {
+		fmt.Println(err)
 		return nil, fmt.Errorf("unable to check for existing folder: %v", err)
 	}
 
@@ -57,6 +61,7 @@ func (g *GDrive) CreateFolder(name, parentID string) (*drive.File, error) {
 
 	file, err := g.service.Files.Create(folder).Do()
 	if err != nil {
+		fmt.Println(err)
 		return nil, fmt.Errorf("unable to create folder: %v", err)
 	}
 
