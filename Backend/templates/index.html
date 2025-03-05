@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tutor Manager</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script
       src="https://unpkg.com/htmx.org@2.0.4"
       integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
@@ -12,14 +13,15 @@
     ></script>
   </head>
   <body>
-    <div id="button-container">
-      <!-- 5 Buttons for triggering different actions -->
-      <button hx-get="/action/create_invoice" hx-target="#button-container" hx-swap="outerHTML">Create Invoice</button>
-      <button hx-get="/action/add_student" hx-target="#button-container" hx-swap="innerHTML">Add Student</button>
-      <button hx-get="/action/edit_student" hx-target="#button-container" hx-swap="outerHTML">Edit Student</button>
-      <button hx-get="/action/remove_student" hx-target="#button-container" hx-swap="outerHTML">Remove Student</button>
-      <button hx-get="/action/TODO" hx-target="#button-container" hx-swap="outerHTML">TODO</button>
+    <div class="button-background" id="button-background">
+      <div class="button-container" id="button-container">
+        <!-- 5 Buttons for triggering different actions -->
+        <button class="option-button" hx-get="/action/create_invoice" hx-target="#button-background" hx-swap="outerHTML">Create Invoice</button>
+        <button class="option-button" hx-get="/action/add_student" hx-target="#button-background" hx-swap="outerHTML">Add Student</button>
+        <button class="option-button" hx-get="/action/edit_student" hx-target="#button-background" hx-swap="outerHTML">Edit Student</button>
+        <button class="option-button" hx-get="/action/remove_student" hx-target="#button-background" hx-swap="outerHTML">Remove Student</button>
+        <button class="option-button" hx-get="/action/TODO" hx-target="#button-background" hx-swap="outerHTML">TODO</button>
+      </div>
     </div>
-    
   </body>
 </html>

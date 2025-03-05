@@ -1,5 +1,6 @@
 
 body {
+  font-family: 'Poppins', sans-serif;
   background-color: #050303; /* Initial background color to avoid white flash */
   background-image: url('landing.jpg'); /* Replace with the actual path to your image */
   background-size: cover;      /* Ensures the image covers the entire page */
@@ -8,21 +9,69 @@ body {
   margin: 0;                   /* Removes default margin */
   font-family: Arial, sans-serif; /* Choose your preferred font */
 }
+h1, h2, h3, label, select, button {
+  font-family: 'Poppins', sans-serif;
+}
+
+button {
+  font-weight: bold;
+}
   
 /* Centering the form container */
+.button-background {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 16px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 76%);
+  width: 350px;
+  height: 400px;
+}
+.button-container {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+}
+.option-button {
+  background-color: white;
+  border-radius: 16px;
+  margin-top: 28px;
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 45px;
+  border-color: black;
+  border: 6px;
+  cursor: pointer;
+}
+.option-button:hover{
+  background-color: rgb(197, 190, 190);
+}
 .container-centered {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 20%);
-    width: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 20%);
+  width: 750px;
+}
+  .container-centered.create-invoice{
+    transform: translate(-50%, 70%);
   }
-  
-  /* Card styling */
+
+  .container-centered.remove-student{
+    transform: translate(-50%, 70%);
+  }
+  .container-centered.invoice-inspect{
+    height: 1030px;
+    width: 1100px;
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translate(-50%, 10%);
+    border-radius: 16px;
+  }
   .card {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.8);
     border-radius: 16px;
     padding: 16px;
     color: white;
+    padding-right: 37px;
   }
   
   /* Heading */
@@ -31,6 +80,11 @@ body {
     font-weight: bold;
     margin-bottom: 16px;
   }
+    .heading.invoice {
+      position: relative;
+      color: white;
+      left: 23px;
+    }
   
   /* Label styling */
   .label {
@@ -57,14 +111,15 @@ body {
     padding: 10px 16px;
     color: white;
     font-weight: bold;
-    border: none;
+    border-color: black;
+    border: 6px;
     cursor: pointer;
   }
   
   /* Cancel button */
   .button-cancel {
     background-color: red;
-    margin-right: 10px;
+    margin-right: 13px;
   }
   
   .button-cancel:hover {
@@ -73,16 +128,33 @@ body {
   
   /* Submit button */
   .button-submit {
-    background-color: blue;
+    background-color: #2596be;
+    margin-right: -16px;
   }
+    .button-submit.remove {
+      background-color: #2596be;
+      margin-right: 0px;
+    }
   
   .button-submit:hover {
-    background-color: darkblue;
+    background-color: #2383a7;
   }
   
   /* Form button container */
   .form-container {
     display: flex;
     justify-content: flex-end;
+  }
+  .form-container.invoice {
+    position: relative;
+    left: -40px;
+    top: 10px;
+  }
+
+  .pdf-container {
+    position: relative;
+    left: 22px;
+    width: 1050px;
+    height: 900px;
   }
   

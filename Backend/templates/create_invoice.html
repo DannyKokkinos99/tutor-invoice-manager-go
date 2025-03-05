@@ -1,4 +1,4 @@
-<div class="container-centered" id="main">
+<div class="container-centered create-invoice" id="main">
     <div class="card">
       <h1 class="heading">Generate Invoice</h1>
       <form method="POST" id="create-invoice-form">
@@ -19,7 +19,7 @@
   
         <div class="form-container">
           <button type="button" class="button button-cancel" hx-get="/" hx-target="#main" hx-swap="outerHTML">Cancel</button>
-          <button type="submit" class="button button-submit" hx-post="/build_invoice" hx-target="#main">Generate Invoice</button>
+          <button type="submit" class="button button-submit" hx-post="/build_invoice" hx-target="#main" hx-swap="outerHTML">Generate Invoice</button>
         </div>
       </form>
     </div>

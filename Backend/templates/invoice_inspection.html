@@ -1,0 +1,25 @@
+<div class="container-centered invoice-inspect" id="main">
+  <h1 class="heading invoice">Invoice Inspection</h1>
+  <!-- PDF Viewer -->
+  <div class="pdf-container">
+    <iframe
+      src="/serve_pdf?invoice_name={{.invoice_name }}"
+      width="100%"
+      height="100%"
+    ></iframe>
+  </div>
+
+  <!-- Button Container -->
+  <div class="form-container invoice">
+    <button type="button" class="button button-cancel" hx-get="/" hx-target="#main" hx-swap="outerHTML">Cancel</button>
+    <button
+      class="button button-submit"
+      hx-confirm="Please confirm the invoice is correct before sending"
+      hx-post="/invoice_send?student_id={{ .student_id }}&hours={{.hours }}&total={{ .total }}"
+      hx-target="#main"
+    >Send
+    </button>
+  </div>
+</div>
+
+  
