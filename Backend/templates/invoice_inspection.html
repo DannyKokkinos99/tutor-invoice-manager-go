@@ -13,10 +13,17 @@
   <div class="form-container invoice">
     <button type="button" class="button button-cancel" hx-get="/" hx-target="#main" hx-swap="outerHTML">Cancel</button>
     <button
-      class="button button-submit"
-      hx-confirm="Please confirm the invoice is correct before sending"
-      hx-post="/invoice_send?student_id={{ .student_id }}&hours={{.hours }}&total={{ .total }}"
+      class="button button-complete"
+      hx-confirm="Please confirm the invoice is correct before completing"
+      hx-get="/invoice_send?student_id={{ .student_id }}&hours={{.hours }}&invoice_name={{ .invoice_name }}&mail=0"
       hx-target="#main"
+    >Complete
+    </button>
+    <button
+    class="button button-submit"
+    hx-confirm="Please confirm the invoice is correct before sending"
+    hx-get="/invoice_send?student_id={{ .student_id }}&hours={{.hours }}&invoice_name={{ .invoice_name }}&mail=1"
+    hx-target="#main"
     >Send
     </button>
   </div>

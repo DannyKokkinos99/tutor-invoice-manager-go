@@ -66,6 +66,7 @@ func main() {
 	routes.RegisterStudentRoutes(r, db)
 	routes.RegisterPageRoutes(r, db)
 	routes.RegisterInvoiceRoutes(r, db)
+	routes.RegisterDashboardRoutes(r, db)
 
 	// Serve Swagger UI
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

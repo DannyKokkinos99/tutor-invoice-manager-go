@@ -5,7 +5,7 @@
         <div>
           <label for="student_id" class="label">Select Student</label>
           <select id="student_id" name="student_id" class="input-field" required>
-            <option value="">Select a student</option>
+            <option value="">-- Select a Student --</option>
             {{ range .students }}
                 <option value="{{ .ID }}">{{ .Name }} {{ .Surname }}</option>
             {{ end }}

@@ -13,14 +13,33 @@
     ></script>
   </head>
   <body>
-    <div class="button-background" id="button-background">
-      <div class="button-container" id="button-container">
-        <!-- 5 Buttons for triggering different actions -->
-        <button class="option-button" hx-get="/action/create_invoice" hx-target="#button-background" hx-swap="outerHTML">Create Invoice</button>
-        <button class="option-button" hx-get="/action/add_student" hx-target="#button-background" hx-swap="outerHTML">Add Student</button>
-        <button class="option-button" hx-get="/action/edit_student" hx-target="#button-background" hx-swap="outerHTML">Edit Student</button>
-        <button class="option-button" hx-get="/action/remove_student" hx-target="#button-background" hx-swap="outerHTML">Remove Student</button>
-        <button class="option-button" hx-get="/action/TODO" hx-target="#button-background" hx-swap="outerHTML">TODO</button>
+    <div id="landing">
+      <div class="dashboard">
+        <div class="dashboard-section">
+          <p class="dashboard-text">You have worked with</p>
+          <p class="dashboard-text value first" id="total_students" hx-get="/get_total_students" hx-trigger="load" hx-swap="innerHTML"></p>
+          <p class="dashboard-text">students</p>
+        </div>
+        <div class="dashboard-section">
+          <p class="dashboard-text">You have taught</p>
+          <p class="dashboard-text value second" id="total_students" hx-get="/get_total_hours" hx-trigger="load" hx-swap="innerHTML"></p>
+          <p class="dashboard-text">hours of lessons</p>
+        </div>
+        <div class="dashboard-section">
+          <p class="dashboard-text">You have been paid</p>
+          <p class="dashboard-text value third" id="total_students" hx-get="/get_total_income" hx-trigger="load" hx-swap="innerHTML"></p>
+          <p class="dashboard-text">for work done</p>
+        </div>
+      </div>
+      <div class="button-background" id="button-background">
+        <div class="button-container" id="button-container">
+          <!-- 5 Buttons for triggering different actions -->
+          <button class="option-button" hx-get="/action/create_invoice" hx-target="#landing" hx-swap="outerHTML">Create Invoice</button>
+          <button class="option-button" hx-get="/action/add_student" hx-target="#landing" hx-swap="outerHTML">Add Student</button>
+          <button class="option-button" hx-get="/action/edit_student" hx-target="#landing" hx-swap="outerHTML">Edit Student</button>
+          <button class="option-button" hx-get="/action/remove_student" hx-target="#landing" hx-swap="outerHTML">Remove Student</button>
+          <button class="option-button" hx-get="/action/TODO" hx-target="#landing" hx-swap="outerHTML">TODO</button>
+        </div>
       </div>
     </div>
   </body>

@@ -10,7 +10,7 @@ type Student struct {
 	PhoneNumber  string    `gorm:"size:30;not null" form:"phone_number" binding:"required" json:"phone_number"`
 	PricePerHour int       `gorm:"not null" form:"price_per_hour" binding:"required" json:"price_per_hour"`
 	InvoiceCount int       `gorm:"default:1;not null"`
-	Invoices     []Invoice `gorm:"foreignKey:StudentID"`
+	Invoices     []Invoice `gorm:"foreignKey:StudentID;onDelete:CASCADE"`
 }
 
 func (s Student) String() string {
