@@ -1,33 +1,33 @@
 version: "3.8"
 
 services:
-  dev_go:
-    container_name: tutor-manager-go
-    image: tutor-manager-go:dev
-    build:
-      context: ./Backend/
-      dockerfile: Dockerfile
-    ports:
-      - "${PORT}:${PORT}"
-    volumes:
-      - ./backend:/app
-    restart: always
-    depends_on:
-      postgres:
-       condition: service_healthy
-
-  # prod_go:
+  # dev_go:
   #   container_name: tutor-manager-go
-  #   image: tutor-manager-go:latest
+  #   image: tutor-manager-go:dev
   #   build:
   #     context: ./Backend/
-  #     dockerfile: Dockerfile.prod
+  #     dockerfile: Dockerfile
   #   ports:
   #     - "${PORT}:${PORT}"
+  #   volumes:
+  #     - ./backend:/app
   #   restart: always
   #   depends_on:
   #     postgres:
   #      condition: service_healthy
+
+  prod_go:
+    container_name: tutor-manager-go
+    image: tutor-manager-go:latest
+    build:
+      context: ./Backend/
+      dockerfile: Dockerfile.prod
+    ports:
+      - "${PORT}:${PORT}"
+    restart: always
+    depends_on:
+      postgres:
+       condition: service_healthy
 
   postgres:
     image: postgres:17

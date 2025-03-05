@@ -12,6 +12,7 @@ COPY go.mod .
 COPY go.sum .
 RUN go mod download
 ENV GIN_MODE=release
+ENV PROJECT_TYPE=production
 # Copy the entire project into the container
 COPY . .
 
@@ -22,7 +23,7 @@ RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /bin/main .
 FROM scratch
 
 # Set the working directory inside the container
-WORKDIR /app
+# WORKDIR /app
 
 # Copy only the compiled binary from the builder image to the production image
 COPY --from=builder /bin/main /main

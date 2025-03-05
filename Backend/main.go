@@ -36,6 +36,11 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 	// Variables
+	projectType := os.Getenv("PROJECT_TYPE")
+	if projectType == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	PORT := os.Getenv("PORT")
 	// Connect to database
 	db, err := config.InitDB()
