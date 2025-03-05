@@ -142,3 +142,13 @@ func (s *InvoiceService) BuildInvoice(c *gin.Context) {
 		"invoice_name": invoiceName,
 	})
 }
+
+func (s *InvoiceService) CancelInvoice(c *gin.Context) {
+	filePath := c.Query("invoice_name")
+	err := os.Remove(filePath)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to delete local copy of Invoice ❌"})
+	}
+	c.Header("HX-Location", "/")
+	c.Status(http.StatusOK)
+}

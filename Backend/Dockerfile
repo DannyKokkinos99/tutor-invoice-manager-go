@@ -8,7 +8,6 @@ FROM golang:1.24-alpine AS builder
 RUN go install github.com/air-verse/air@latest
 RUN go install github.com/swaggo/swag/cmd/swag@latest
 ENV PATH="/go/bin:${PATH}"
-ENV PROJECT_TYPE=development
 # Set the working directory inside the container
 WORKDIR /app
 

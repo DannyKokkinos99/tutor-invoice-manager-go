@@ -91,9 +91,9 @@ func main() {
 		log.Printf("Backend API docs started on %s:%s/swagger/index.html", domain, port)
 	}
 	if projectType == "production" { //dev works using air
-		log.Printf("Server started on %s:%s", domain, port)
-		if err := r.Run(":" + port); err != nil {
-			log.Fatalf("Failed to start server: %v", err)
-		}
+		log.Printf("Production server started on %s:%s", domain, port)
+	}
+	if err := r.Run(":" + port); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
 	}
 }
