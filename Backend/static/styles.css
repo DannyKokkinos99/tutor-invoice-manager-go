@@ -67,13 +67,13 @@ button {
   font-size: 50px;
 }
 .dashboard-text.value.first {
-  color: rgb(28, 40, 153)
+  color: #912929
 }
 .dashboard-text.value.second {
-  color: rgb(67, 180, 214)
+  color: #43b4d6
 }
 .dashboard-text.value.third {
-  color: rgb(25, 192, 33)
+  color: #19c021
 }
 .dashboard-section{
   margin-left: 45px;
@@ -95,12 +95,12 @@ button {
   .container-centered.invoice-inspect{
     height: 1030px;
     width: 1100px;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #000000cc;
     transform: translate(-50%, 10%);
     border-radius: 16px;
   }
   .card {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #000000cc;
     border-radius: 16px;
     padding: 16px;
     color: white;
@@ -160,12 +160,12 @@ button {
   }
 
   .button-complete {
-    background-color: rgb(250, 105, 9);
+    background-color: #fa6909;
     margin-right: 13px;
   }
 
   .button-complete:hover {
-    background-color: rgb(194, 85, 12);
+    background-color: #c2550c;
   }
   
 
@@ -201,8 +201,4 @@ button {
     left: 22px;
     width: 1050px;
     height: 900px;
-  }
-  .loading {
-    color: gray; /* You can style the loading indicator here */
-    font-size: 14px;
   }
