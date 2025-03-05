@@ -11,7 +11,7 @@
 
   <!-- Button Container -->
   <div class="form-container invoice">
-    <button type="button" class="button button-cancel" hx-get="/" hx-target="#main" hx-swap="outerHTML">Cancel</button>
+    <button type="button" class="button button-cancel" hx-get="/cancel_invoice?invoice_name={{ .invoice_name }}" hx-target="#main" hx-swap="outerHTML">Cancel</button>
     <button
       class="button button-complete"
       hx-confirm="Please confirm the invoice is correct before completing"

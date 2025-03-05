@@ -11,11 +11,15 @@ import (
 )
 
 func InitDB(projectType string) (*gorm.DB, error) {
+
 	if err := godotenv.Load(".env"); err != nil {
 		panic("Error loading .env file")
 	}
 	var dsn string
+	var db *gorm.DB
+	var err error
 	if projectType == "development" {
+		fmt.Println("IN DEV MODE")
 		dsn = fmt.Sprintf(
 			"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC",
 			os.Getenv("DEV_POSTGRES_HOST"),
@@ -24,6 +28,14 @@ func InitDB(projectType string) (*gorm.DB, error) {
 			os.Getenv("DEV_POSTGRES_DB"),
 			os.Getenv("DEV_POSTGRES_PORT"),
 		)
+		db, err = gorm.Open(postgres.New(postgres.Config{
+			DriverName: "pgx",
+			DSN:        dsn,
+		}), &gorm.Config{})
+		if err != nil {
+			panic("failed to connect to database")
+		}
+
 	} else if projectType == "production" {
 		fmt.Println("IN PRODUCTION")
 		dsn = fmt.Sprintf(
@@ -34,20 +46,19 @@ func InitDB(projectType string) (*gorm.DB, error) {
 			os.Getenv("PROD_POSTGRES_DB"),
 			os.Getenv("PROD_POSTGRES_PORT"),
 		)
-		fmt.Println(dsn)
+		db, err = gorm.Open(postgres.New(postgres.Config{
+			DriverName: "pgx",
+			DSN:        dsn,
+		}), &gorm.Config{
+			PrepareStmt: false,
+			Logger:      logger.Default.LogMode(logger.Info),
+		})
+		if err != nil {
+			panic("failed to connect to database")
+		}
+
 	} else {
 		panic("Project type not defined:" + projectType)
-	}
-
-	db, err := gorm.Open(postgres.New(postgres.Config{
-		DriverName: "pgx",
-		DSN:        dsn,
-	}), &gorm.Config{
-		PrepareStmt: false,
-		Logger:      logger.Default.LogMode(logger.Info),
-	})
-	if err != nil {
-		panic("failed to connect to database")
 	}
 
 	return db, nil
