@@ -1,8 +1,6 @@
 package main
 
 import (
-
-	// "backend/routes"
 	"log"
 	"os"
 	"time"
@@ -37,11 +35,13 @@ func main() {
 	}
 	// Variables
 	projectType := os.Getenv("PROJECT_TYPE")
+	domain := os.Getenv("DOMAIN")
+	port := os.Getenv("PORT")
+
 	if projectType == "production" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	PORT := os.Getenv("PORT")
 	// Connect to database
 	db, err := config.InitDB()
 	if err != nil {
@@ -59,27 +59,39 @@ func main() {
 	r := gin.Default()
 
 	// Configure CORS middleware
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},                                                 // Allow all origins
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},  // Allow all methods
-		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"}, // Allow all headers
-		ExposeHeaders:    []string{"Content-Length"},                                    // Expose specific headers
-		AllowCredentials: true,                                                          // Allow credentials (e.g., cookies)
-		MaxAge:           12 * time.Hour,                                                // Cache preflight requests for 12 hours
-	}))
+	if projectType == "production" {
+		r.Use(cors.New(cors.Config{
+			AllowOrigins:     []string{"*"}, //TODO: Change to the hosted url on cloud run
+			AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+			AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+			ExposeHeaders:    []string{"Content-Length"},
+			AllowCredentials: true,
+			MaxAge:           12 * time.Hour,
+		}))
+	} else if projectType == "development" {
+		r.Use(cors.New(cors.Config{
+			AllowOrigins:     []string{"*"},
+			AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+			AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+			ExposeHeaders:    []string{"Content-Length"},
+			AllowCredentials: true,
+			MaxAge:           12 * time.Hour,
+		}))
+	}
 	// Define routes
 	routes.RegisterStudentRoutes(r, db)
 	routes.RegisterPageRoutes(r, db)
 	routes.RegisterInvoiceRoutes(r, db)
 	routes.RegisterDashboardRoutes(r, db)
 
-	// Serve Swagger UI
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	// Start the server
-	log.Printf("Server started on  http://localhost:%v", PORT)
-	log.Printf("Backend API docs started on %v", "http://localhost:4200/swagger/index.html")
-	if err := r.Run(":" + PORT); err != nil {
-		log.Fatalf("Failed to start server: %v", err)
+	if projectType == "development" {
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+		log.Printf("Server started on %s:%s", domain, port)
+		log.Printf("Backend API docs started on %s:%s/swagger/index.html", domain, port)
+	}
+	if projectType == "production" { //dev works using air
+		if err := r.Run(":" + port); err != nil {
+			log.Fatalf("Failed to start server: %v", err)
+		}
 	}
 }

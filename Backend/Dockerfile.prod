@@ -1,3 +1,4 @@
+ENV PROJECT_TYPE=production
 # Use Golang as the builder image
 FROM golang:1.24-alpine AS builder
 
@@ -12,7 +13,6 @@ COPY go.mod .
 COPY go.sum .
 RUN go mod download
 ENV GIN_MODE=release
-ENV PROJECT_TYPE=production
 # Copy the entire project into the container
 COPY . .
 
@@ -27,7 +27,8 @@ FROM scratch
 
 # Copy only the compiled binary from the builder image to the production image
 COPY --from=builder /bin/main /main
-COPY --from=builder /app/.env .env
+#Remove .env from prod version once hosted on cloud run
+COPY --from=builder /app/.env .env 
 COPY --from=builder /app/templates /templates
 COPY --from=builder /app/static /static
 

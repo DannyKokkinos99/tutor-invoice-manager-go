@@ -1,3 +1,4 @@
+ENV PROJECT_TYPE=development
 # Use Golang as the builder image
 FROM golang:1.24-alpine AS builder
 
@@ -8,7 +9,6 @@ FROM golang:1.24-alpine AS builder
 RUN go install github.com/air-verse/air@latest
 RUN go install github.com/swaggo/swag/cmd/swag@latest
 ENV PATH="/go/bin:${PATH}"
-
 # Set the working directory inside the container
 WORKDIR /app
 
