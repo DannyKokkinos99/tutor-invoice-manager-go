@@ -4,12 +4,16 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
-func InitDB() (*gorm.DB, error) {
-	projectType := os.Getenv("PROJECT_TYPE")
+func InitDB(projectType string) (*gorm.DB, error) {
+	if err := godotenv.Load(".env"); err != nil {
+		panic("Error loading .env file")
+	}
 	var dsn string
 	if projectType == "development" {
 		dsn = fmt.Sprintf(
@@ -21,6 +25,7 @@ func InitDB() (*gorm.DB, error) {
 			os.Getenv("DEV_POSTGRES_PORT"),
 		)
 	} else if projectType == "production" {
+		fmt.Println("IN PRODUCTION")
 		dsn = fmt.Sprintf(
 			"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC",
 			os.Getenv("PROD_POSTGRES_HOST"),
@@ -29,12 +34,18 @@ func InitDB() (*gorm.DB, error) {
 			os.Getenv("PROD_POSTGRES_DB"),
 			os.Getenv("PROD_POSTGRES_PORT"),
 		)
+		fmt.Println(dsn)
+	} else {
+		panic("Project type not defined:" + projectType)
 	}
 
 	db, err := gorm.Open(postgres.New(postgres.Config{
 		DriverName: "pgx",
 		DSN:        dsn,
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		PrepareStmt: false,
+		Logger:      logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		panic("failed to connect to database")
 	}

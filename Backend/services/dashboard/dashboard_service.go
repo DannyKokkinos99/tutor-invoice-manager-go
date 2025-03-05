@@ -31,6 +31,7 @@ func (d *DashboardService) TotalHours(c *gin.Context) {
 	// Query the total number of hours in the invoices table
 	var totalHours float64
 	if err := d.db.Model(&models.Invoice{}).Select("SUM(hours)").Scan(&totalHours).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		totalHours = 0
 	}
 
