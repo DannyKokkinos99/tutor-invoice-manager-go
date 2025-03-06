@@ -73,7 +73,7 @@ func (s *InvoiceService) SendInvoice(c *gin.Context) {
 		bodyText := fmt.Sprintf(`
 		<html>
 			<body>
-				<p>Hello %s,</p>
+				<p>Dear %s,</p>
 				<p>Please find attached the weekly invoice for your review.</p>
 				<p>Kind regards,</p>
 				<p>Danny</p>
