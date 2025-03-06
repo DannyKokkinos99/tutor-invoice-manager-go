@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 	"tutor-invoice-manager/gdrive"
+	"tutor-invoice-manager/gmail"
 	"tutor-invoice-manager/models"
 	"tutor-invoice-manager/pdf"
 	"tutor-invoice-manager/schemas"
@@ -68,7 +69,25 @@ func (s *InvoiceService) SendInvoice(c *gin.Context) {
 
 	//TODO: send emaail to parents including pdf
 	if sendMail {
-		fmt.Println("SEND MAIL!")
+
+		bodyText := fmt.Sprintf(`
+		<html>
+			<body>
+				<p>Hello %s,</p>
+				<p>Please find attached the weekly invoice for your review.</p>
+				<p>Kind regards,</p>
+				<p>Danny</p>
+			</body>
+		</html>`, student.Parent)
+
+		fmt.Println(bodyText)
+		currentDate := time.Now().Format("02-01-2006")
+		subject := fmt.Sprintf("Invoice - %s", currentDate)
+		gm := gmail.NewEmailSender(os.Getenv("EMAIL"), os.Getenv("APP_PASSWORD"))
+		err := gm.SendEmail(student.Email, subject, bodyText, filePath)
+		if err != nil {
+			log.Fatalf("Error sending email: %v\n", err)
+		}
 	}
 	// Delete local invoice after it is send via email
 	err = os.Remove(filePath)
