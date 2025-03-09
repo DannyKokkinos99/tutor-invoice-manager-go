@@ -135,7 +135,7 @@ func (s *InvoiceService) BuildInvoice(c *gin.Context) {
 		log.Fatalf("Error: %v", err)
 	}
 
-	studentFullName := fmt.Sprintf("%s %s", student.Name, student.Surname)
+	clientFullName := fmt.Sprintf("%s %s", student.Parent, student.Surname)
 	invoiceName := fmt.Sprintf("Invoice-%v.pdf", student.InvoiceCount)
 
 	//Build PDF using PDF library
@@ -143,7 +143,7 @@ func (s *InvoiceService) BuildInvoice(c *gin.Context) {
 		req.Hours,
 		float64(student.PricePerHour),
 		student.InvoiceCount,
-		studentFullName,
+		clientFullName,
 		student.Address,
 		student.PhoneNumber)
 	filePath := filepath.Join(INVOICE_FOLDER_LOCAL_PATH, invoiceName)
