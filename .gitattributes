@@ -1,2 +1,4 @@
 docker-compose.yml merge=ours
+docker-compose.yml rebase=ours
 /Backend/.env merge=ours
+/Backend/.env rebase=ours
