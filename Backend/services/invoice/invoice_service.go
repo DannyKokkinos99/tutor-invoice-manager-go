@@ -74,7 +74,7 @@ func (s *InvoiceService) SendInvoice(c *gin.Context) {
 		<html>
 			<body>
 				<p>Dear %s,</p>
-				<p>Please find attached the weekly invoice for your review.</p>
+				<p>Please find attached the weekly invoice.</p>
 				<p>Kind regards,</p>
 				<p>Danny</p>
 			</body>
