@@ -10,7 +10,6 @@ services:
   #   ports:
   #     - "${PORT}:${PORT}"
 
-
   dev_go:
     container_name: tutor-manager-go
     image: tutor-manager-go:dev
