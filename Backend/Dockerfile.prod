@@ -11,9 +11,22 @@ WORKDIR /app
 COPY go.mod .
 COPY go.sum .
 RUN go mod download
-# Copy the entire project into the container
-COPY . .
+# Copy only the required files to the builder image
+COPY main.go .
+COPY config/ ./config/
+COPY models/ ./models/
+COPY routes/ ./routes/
+COPY schemas/ ./schemas/
+COPY services/ ./services/
+COPY utils/ ./utils/
+COPY pdf/ ./pdf/
+COPY gdrive/ ./gdrive/
+COPY gmail/ ./gmail/
 
+# Copy templates and static files
+COPY templates/ ./templates/
+COPY static/ ./static/
+COPY docs/ ./docs/
 # Build the Go application
 RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /bin/main .
 
@@ -26,10 +39,10 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 # Copy only the compiled binary from the builder image to the production image
 COPY --from=builder /bin/main /main
 #Remove .env from prod version once hosted on cloud run
-COPY --from=builder /app/.env .env 
+
 COPY --from=builder /app/templates /templates
 COPY --from=builder /app/static /static
-COPY --from=builder /app/service_account.json service_account.json
+
 
 # Expose the application port
 EXPOSE 4200
